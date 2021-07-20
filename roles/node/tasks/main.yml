@@ -27,7 +27,9 @@
     - "{{ software_dir }}/cni-plugins-*.tgz"
 
 - name: 移动k8s node二进制文件
-  shell: cp -rf {{ tmp_dir }}/kubernetes/server/bin/{kubelet,kube-proxy} {{ k8s_work_dir }}/bin
+  shell: cp -rf {{ tmp_dir }}/kubernetes/server/bin/kubelet {{ k8s_work_dir }}/bin && \
+         cp -rf {{ tmp_dir }}/kubernetes/server/bin/kube-proxy {{ k8s_work_dir }}/bin
+
 
 - name: 分发k8s证书
   copy: src=k8s_cert/{{ item }} dest={{ k8s_work_dir }}/ssl

@@ -3,27 +3,33 @@
 
 - name: 关闭firewalld
   service: name=firewalld state=stopped enabled=no
+  when: ansible_os_family == "RedHat"
 
 - name: 关闭selinux
   lineinfile:
     dest: /etc/selinux/config
     regexp: "^SELINUX="
     line: "SELINUX=disabled"
-  
+  when: ansible_os_family == "RedHat"
+
 - name: 关闭swap
   lineinfile:
     dest: /etc/fstab
     regexp: ".*swap"
     line: ""
 
-- name: 即时生效
-  shell: setenforce 0 ; swapoff -a
+- name: 即时生效selinux
+  shell: setenforce 0
+  when: ansible_os_family == "RedHat"
+
+- name: 即时生效swap
+  shell: swapoff -a
 
 - name: 拷贝时区
   copy: src=/usr/share/zoneinfo/Asia/Shanghai dest=/etc/localtime
 
 - name: 添加hosts
-  template: src=hosts.j2 dest=/etc/hosts 
+  template: src=hosts.j2 dest=/etc/hosts
 
 #- name: 同步系统时间
 #  yum: name=ntpdate state=present

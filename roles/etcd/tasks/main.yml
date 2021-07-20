@@ -15,7 +15,8 @@
     - "{{ software_dir }}/etcd-v*.tar.gz"
 
 - name: 移动etcd二进制文件
-  shell: cp -rf {{ tmp_dir }}/etcd-v*/{etcd,etcdctl} {{ etcd_work_dir }}/bin
+  shell: cp -rf {{ tmp_dir }}/etcd-v*/etcd {{ etcd_work_dir }}/bin && \
+         cp -rf {{ tmp_dir }}/etcd-v*/etcdctl {{ etcd_work_dir }}/bin
 
 - name: 分发证书
   copy: src=etcd_cert/{{ item }} dest={{ etcd_work_dir }}/ssl
@@ -29,7 +30,7 @@
 
 - name: 分发service文件
   template: src=etcd.service.j2 dest=/usr/lib/systemd/system/etcd.service
-    
+
 - name: 启动etcd
   systemd: name=etcd state=restarted enabled=yes daemon_reload=yes
 
@@ -38,5 +39,5 @@
 
 - name: 获取etcd集群状态
   shell: /bin/bash {{ tmp_dir }}/etcd.sh
-  register: status 
+  register: status
 - debug: var=status.stdout_lines

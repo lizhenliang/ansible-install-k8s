@@ -1,5 +1,11 @@
+{% if ansible_os_family == "Debian" %}
+127.0.0.1 localhost
+127.0.1.1 {{ inventory_hostname }}
+{% endif %}
+{% if ansible_os_family == "RedHat" %}
 127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
 ::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
+{% endif %}
 {% for host in groups['k8s'] %}
 {{ hostvars[host].inventory_hostname }} {{ hostvars[host].node_name }}
-{% endfor %} 
+{% endfor %}

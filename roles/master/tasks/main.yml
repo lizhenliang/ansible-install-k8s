@@ -19,7 +19,9 @@
     - "{{ software_dir }}/kubernetes-*.tar.gz"
 
 - name: 移动k8s master二进制文件
-  shell: cp -rf {{ tmp_dir }}/kubernetes/server/bin/{kube-apiserver,kube-controller-manager,kube-scheduler} {{ k8s_work_dir }}/bin && \
+  shell: cp -rf {{ tmp_dir }}/kubernetes/server/bin/kube-apiserver {{ k8s_work_dir }}/bin && \
+         cp -rf {{ tmp_dir }}/kubernetes/server/bin/kube-controller-manager {{ k8s_work_dir }}/bin && \
+         cp -rf {{ tmp_dir }}/kubernetes/server/bin/kube-scheduler {{ k8s_work_dir }}/bin && \
          cp -rf {{ tmp_dir }}/kubernetes/server/bin/kubectl /usr/bin
 
 - name: 分发k8s证书
@@ -95,10 +97,10 @@
 - name: 自动审批Kubelet证书
   ignore_errors: yes
   shell: |
-     #自动批准首次申请证书的 CSR 请求 
+     #自动批准首次申请证书的 CSR 请求
      kubectl create clusterrolebinding node-client-auto-approve-csr --clusterrole=system:certificates.k8s.io:certificatesigningrequests:nodeclient --user=kubelet-bootstrap 
-     # 自动批准kubelet客户端证书续签 
+     # 自动批准kubelet客户端证书续签
      kubectl create clusterrolebinding node-client-auto-renew-crt --clusterrole=system:certificates.k8s.io:certificatesigningrequests:selfnodeclient --group=system:nodes 
-     # 自动批准kubelet服务端证书续签 
+     # 自动批准kubelet服务端证书续签
      kubectl create clusterrolebinding node-server-auto-renew-crt --clusterrole=system:certificates.k8s.io:certificatesigningrequests:selfnodeserver --group=system:nodes
 

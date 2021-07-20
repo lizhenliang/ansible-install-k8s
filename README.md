@@ -1,11 +1,19 @@
 # Kubernetes v1.20 企业级高可用集群自动部署（离线版）
 >### 注：确保所有节点系统时间一致
->### 操作系统要求：CentOS7.x_x64
+>### 操作系统要求：CentOS7.x_x64、> Debian9.x_x64 或 > Ubuntu16.04_x64
 
 ### 1、找一台服务器安装Ansible
 ```
+# Centos
 # yum install epel-release -y
 # yum install ansible -y
+
+# Debian
+# apt-get install ansible -y
+
+# python3
+# pip3 install ansible
+
 ```
 ### 2、下载所需文件
 
@@ -19,7 +27,7 @@
 下载准备好软件包（包含所有涉及文件和镜像，比较大），解压到/root目录：
 
 云盘链接：https://pan.baidu.com/s/1uCLylsj1-W2HigS_Tn9b5g 
-提取码：bicc 
+提取码：bicc
 ```
 # tar zxf binary_pkg.tar.gz
 ```
