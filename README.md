@@ -94,6 +94,6 @@ k8s-node2     Ready    <none>   9h    v1.25.2
 <br/>
 <br/>
 
-视频教程：https://ke.qq.com/course/266656
+视频教程：[https://www.aliangedu.cn/course](https://www.aliangedu.cn/course)
 
 ![avatar](https://github.com/lizhenliang/Shell-Python-Document/blob/master/%E8%81%94%E7%B3%BB%E6%96%B9%E5%BC%8F.png)
